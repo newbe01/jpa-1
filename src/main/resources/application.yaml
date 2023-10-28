@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/test;MVCC=TRUE
+    url: jdbc:h2:tcp://localhost/~/test
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -16,3 +16,4 @@ spring:
 logging:
   level:
     org.hibernate.sql: debug
+#    org.hibernate.type: trace

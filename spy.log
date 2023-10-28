@@ -1,0 +1,7 @@
+1698491953006|1|statement|connection 1|url jdbc:h2:tcp://localhost/~/test|     drop table if exists member CASCADE |     drop table if exists member CASCADE 
+1698491953008|0|statement|connection 1|url jdbc:h2:tcp://localhost/~/test|     drop sequence if exists hibernate_sequence|     drop sequence if exists hibernate_sequence
+1698491953011|0|statement|connection 2|url jdbc:h2:tcp://localhost/~/test|create sequence hibernate_sequence start with 1 increment by 1|create sequence hibernate_sequence start with 1 increment by 1
+1698491953013|1|statement|connection 2|url jdbc:h2:tcp://localhost/~/test|     create table member (        id bigint not null,         username varchar(255),         primary key (id)     )|     create table member (        id bigint not null,         username varchar(255),         primary key (id)     )
+1698491955072|6|statement|connection 3|url jdbc:h2:tcp://localhost/~/test|call next value for hibernate_sequence|call next value for hibernate_sequence
+1698491955145|0|statement|connection 3|url jdbc:h2:tcp://localhost/~/test|insert into member (username, id) values (?, ?)|insert into member (username, id) values ('memberA', 1)
+1698491955146|0|commit|connection 3|url jdbc:h2:tcp://localhost/~/test||
