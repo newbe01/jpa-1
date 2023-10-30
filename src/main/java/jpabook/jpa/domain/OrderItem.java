@@ -28,4 +28,27 @@ public class OrderItem {
 
     private int count;
 
+    //  create method
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+
+        item.removeStock(count);
+
+        return orderItem;
+    }
+
+    //  business logic
+    public void cancel() {
+        getItem().addStock(count);
+
+    }
+
+    //  search logic
+    public int getTotalPrice() {
+        return getOrderPrice() * getCount();
+    }
+
 }
