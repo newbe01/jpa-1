@@ -8,12 +8,15 @@ import jpabook.jpa.domain.item.Book;
 import jpabook.jpa.domain.item.Item;
 import jpabook.jpa.exception.NotEnoughStockException;
 import jpabook.jpa.repository.OrderRepository;
+import jpabook.jpa.repository.OrderSearch;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -81,6 +84,34 @@ class OrderServiceTest {
 
         assertThat(result.getStatus()).isEqualTo(OrderStatus.CANCEL);
         assertThat(10).isEqualTo(item.getStockQuantity());
+    }
+
+    @Test
+    void orderSearchTest() {
+        //  given
+        Member member = createMember("name");
+        Item item = createBook("name", 10000, 10);
+        int orderCount = 2;
+
+        Long orderId = orderService.order(member.getId(), item.getId(), orderCount);
+
+        OrderSearch orderSearch = new OrderSearch();
+        orderSearch.setOrderStatus(OrderStatus.ORDER);
+        orderSearch.setMemberName("name");
+
+
+        //  when
+        List<Order> result = orderService.findOrders(orderSearch);
+
+        //  then
+        System.out.println("-==============================-");
+        System.out.println("result = " + result.get(0).toString());
+        System.out.println("result = " + result.get(0).getStatus());
+        System.out.println("result = " + result.get(0).getMember().getName());
+        assertThat(result.get(0).getStatus()).isEqualTo(OrderStatus.ORDER);
+        assertThat(result.get(0).getMember().getName()).isEqualTo("name");
+
+
     }
 
     private Member createMember(String name) {
