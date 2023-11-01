@@ -34,18 +34,21 @@ public class OrderRepository {
 
         List<Predicate> criteria = new ArrayList<>();
 
+        //주문 상태 검색
         if (orderSearch.getOrderStatus() != null) {
             Predicate status = cb.equal(o.get("status"), orderSearch.getOrderStatus());
             criteria.add(status);
         }
-
+        //회원 이름 검색
         if (StringUtils.hasText(orderSearch.getMemberName())) {
-            Predicate name = cb.like(m.get("name"), "%" + orderSearch.getMemberName() + "%");
+            Predicate name =
+                    cb.like(m.<String>get("name"), "%" + orderSearch.getMemberName() + "%");
             criteria.add(name);
         }
 
         cq.where(cb.and(criteria.toArray(new Predicate[criteria.size()])));
-        return em.createQuery(cq).setMaxResults(1000).getResultList();
+        TypedQuery<Order> query = em.createQuery(cq).setMaxResults(1000);
+        return query.getResultList();
     }
 
 }
